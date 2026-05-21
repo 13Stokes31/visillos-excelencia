@@ -1,0 +1,5 @@
+# PDFs generados al compilar la plantilla
+*.pdf
+
+# Sistema
+.DS_Store
