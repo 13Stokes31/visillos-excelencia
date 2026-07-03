@@ -49,7 +49,12 @@ En el archivo `main.typ`, encontrarás la función `proyecto` que configura todo
 - `fecha`: La fecha de entrega o defensa.
 - `logo`: La imagen del logo para la portada (por defecto `image("Logo.svg", width: 30%)`).
 - `fuente`: La tipografía del documento. Se recomienda "Libertinus Serif" (incluida en Typst) o "Times New Roman" si la tienes instalada localmente.
-- `abstract`, `resumen`, `agradecimientos`: Las páginas iniciales. La plantilla les pone título, página propia, numeración romana y entrada en el índice.
+- `tamano-fuente`: Tamaño del texto (por defecto `12pt`). Los títulos escalan con él.
+- `interlineado`: Interlineado del texto (por defecto `1em`).
+- `color-acento`: Color de los títulos de capítulo (por defecto `rgb("#279985")`).
+- `abstract`, `resumen`, `agradecimientos`: Las páginas iniciales. La plantilla les pone título, página propia, numeración romana y entrada en el índice. Omite las que no quieras (`none`).
+- `bibliografia`: La bibliografía, p. ej. `bibliography("referencias.yaml", style: "apa", title: "Bibliografía")`. Va al final del documento; `none` para omitirla.
+- `lista-figuras`, `lista-tablas`: Por defecto `true`. Las listas van al final, después de la bibliografía; ponlas a `false` si no las quieres.
 - `doble-cara`: Por defecto `false`. Ponlo a `true` si vas a imprimir a doble cara: cada capítulo abrirá en página impar (insertando páginas en blanco donde haga falta) y los números de página irán en el lado exterior.
 
 Además, la plantilla numera figuras, tablas y ecuaciones **por capítulo** (Figura 2.1, ecuación (3.1)…), rellena el título y el autor en las propiedades del PDF, y muestra el capítulo actual en la cabecera de cada página.
@@ -67,6 +72,7 @@ Además, la plantilla numera figuras, tablas y ecuaciones **por capítulo** (Fig
   abstract: include "Archivos/00_1_Abstract.typ",
   resumen: include "Archivos/00_2_Resumen.typ",
   agradecimientos: include "Archivos/00_3_Agradecimientos.typ",
+  bibliografia: bibliography("referencias.yaml", style: "apa", title: "Bibliografía"),
 )
 
 #include "Archivos/01_Introducción.typ"

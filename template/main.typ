@@ -10,12 +10,20 @@
   fecha: "Mayo 2026", // Cambia la fecha a la de entrega
   logo: image("Logo.svg", width: 30%),
   fuente: "Libertinus Serif", // Puedes cambiar a "Times New Roman" si la tienes instalada
+  // tamano-fuente: 12pt,     // Descomenta para ajustar el tamaño del texto
+  // interlineado: 1em,       // Descomenta para ajustar el interlineado
+  // color-acento: rgb("#279985"), // Descomenta para cambiar el color de los títulos
   doble-cara: false, // Pon true si vas a imprimir a doble cara (capítulos en página impar)
 
-  // Páginas iniciales: la plantilla les pone título, página propia y entrada en el índice
+  // Páginas iniciales: la plantilla les pone título, página propia y entrada en el índice.
+  // Si no quieres alguna, borra su línea (o pon none).
   abstract: include "Archivos/00_1_Abstract.typ",
   resumen: include "Archivos/00_2_Resumen.typ",
   agradecimientos: include "Archivos/00_3_Agradecimientos.typ",
+
+  // Bibliografía y listas finales (van al final del documento, en este orden).
+  // Si no quieres alguna: bibliografia: none, lista-figuras: false, lista-tablas: false
+  bibliografia: bibliography("referencias.yaml", style: "apa", title: "Bibliografía"),
 )
 
 // ==========================================
@@ -34,6 +42,3 @@
 #include "Archivos/03_Conclusión.typ"
 #include "Archivos/04_Anexos.typ"
 #include "Archivos/05_Glosario.typ"
-
-// Bibliografía (asegúrate de que el archivo referencias.yaml esté en la misma carpeta)
-#bibliography("referencias.yaml", style: "apa", title: "Bibliografía")

@@ -43,10 +43,16 @@
   fecha: [Mayo 2026],
   logo: none,
   fuente: "Libertinus Serif",
-  abstract: none,
-  resumen: none,
-  agradecimientos: none,
-  doble-cara: false, // true: capítulos en página impar (para imprimir a doble cara)
+  tamano-fuente: 12pt,
+  interlineado: 1em,
+  color-acento: rgb("#279985"),
+  abstract: none,          // contenido, o none para omitirlo
+  resumen: none,           // contenido, o none para omitirlo
+  agradecimientos: none,   // contenido, o none para omitirlo
+  bibliografia: none,      // p. ej. bibliography("referencias.yaml", style: "apa", title: "Bibliografía")
+  lista-figuras: true,     // lista de figuras al final del documento
+  lista-tablas: true,      // lista de tablas al final del documento
+  doble-cara: false,       // true: capítulos en página impar (para imprimir a doble cara)
   body,
 ) = {
 
@@ -63,7 +69,7 @@
     margin: (left: 2.5cm, right: 2.5cm, top: 2.5cm, bottom: 2.5cm),
   )
 
-  set text(12pt, font: fuente, lang: "es")
+  set text(tamano-fuente, font: fuente, lang: "es")
 
   // Numeración por capítulo: Figura 2.1, Tabla 3.2, ecuación (1.4)
   set math.equation(numbering: n => context numbering("(1.1)", counter(heading).get().first(), n))
@@ -108,8 +114,8 @@
 
   salto()
 
-  // Numeración romana para las páginas iniciales y los índices
-  set par(justify: true, leading: 1em, spacing: 20pt)
+  // Numeración romana para las páginas iniciales y el índice
+  set par(justify: true, leading: interlineado, spacing: 20pt)
   counter(page).update(1)
   set page(numbering: "I", footer: context {
     let pagina = counter(page).get().first()
@@ -123,18 +129,18 @@
     #counter(figure.where(kind: table)).update(0)
     #counter(math.equation).update(0)
     #v(10pt)
-    #set text(size: 16pt, fill: rgb("#279985"))
+    #set text(size: tamano-fuente + 4pt, fill: color-acento)
     #it
   ]
 
   show heading.where(level: 2): it => [
     #v(5pt)
-    #set text(size: 14pt, weight: "bold", fill: rgb("#2a2a2a"))
+    #set text(size: tamano-fuente + 2pt, weight: "bold", fill: rgb("#2a2a2a"))
     #it
   ]
 
   show heading.where(level: 3): it => [
-    #set text(size: 12pt, weight: "regular", style: "italic", fill: black)
+    #set text(size: tamano-fuente, weight: "regular", style: "italic", fill: black)
     #it
   ]
 
@@ -145,7 +151,7 @@
   set figure.caption(position: top)
 
   show figure.caption: it => block(width: 100%)[
-    #set text(size: 10pt)
+    #set text(size: tamano-fuente - 2pt)
     #set par(spacing: 1em)
     #strong[#it.supplement #context it.counter.display(it.numbering)]
     #emph[#it.body]
@@ -160,7 +166,7 @@
   if resumen != none { portadilla([Resumen], resumen) }
   if agradecimientos != none { portadilla([Agradecimientos], agradecimientos) }
 
-  // Índice general (solo aquí van los capítulos en negrita)
+  // Índice general (capítulos en negrita)
   {
     show outline.entry.where(level: 1): it => {
       v(12pt, weak: true)
@@ -168,20 +174,6 @@
     }
     outline(depth: 2, indent: auto)
   }
-
-  // Listas de imágenes y tablas, con el número "capítulo.n" de cada elemento
-  let lista-de(nombre, tipo) = {
-    show outline.entry: it => context {
-      let el = it.element
-      it.indented(
-        [#el.supplement #numero-en-capitulo(counter(figure.where(kind: tipo)), el.location(), "1.1")],
-        it.inner(),
-      )
-    }
-    outline(title: nombre, target: figure.where(kind: tipo))
-  }
-  lista-de("Lista de imágenes", image)
-  lista-de("Lista de tablas", table)
 
   // Cuerpo del documento: numeración arábiga y cabecera con el capítulo actual
   set page(
@@ -196,7 +188,7 @@
       let numero = if capitulo.numbering == none { [] } else {
         [#numbering("1.", counter(heading).at(capitulo.location()).first()) ]
       }
-      align(lado-de(pagina), text(10pt, style: "italic", numero + capitulo.body))
+      align(lado-de(pagina), text(tamano-fuente - 2pt, style: "italic", numero + capitulo.body))
     },
     footer: context {
       let pagina = counter(page).get().first()
@@ -207,4 +199,23 @@
 
   // AQUÍ SE VOLCARÁ EL TEXTO DEL ALUMNO
   body
+
+  // Bibliografía
+  if bibliografia != none { bibliografia }
+
+  // Listas finales de figuras y tablas, con el número "capítulo.n" de cada una
+  let lista-de(nombre, tipo) = {
+    heading(level: 1, numbering: none, outlined: true, nombre)
+    show outline.entry: it => context {
+      let el = it.element
+      v(12pt, weak: true)
+      strong(it.indented(
+        [#el.supplement #numero-en-capitulo(counter(figure.where(kind: tipo)), el.location(), "1.1")],
+        it.inner(),
+      ))
+    }
+    outline(title: none, target: figure.where(kind: tipo))
+  }
+  if lista-figuras { lista-de([Lista de figuras], image) }
+  if lista-tablas { lista-de([Lista de tablas], table) }
 }
