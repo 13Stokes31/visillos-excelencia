@@ -2,6 +2,7 @@
 name = "visillos-excelencia"
 version = "0.2.0"
 entrypoint = "lib.typ"
+compiler = "0.13.0"
 authors = ["Jesús Manuel González Meneses"]
 license = "MIT"
 description = "Unofficial template for Excellence Baccalaureate projects at IES Carmen Martín Gaite (Spain) // Plantilla para los proyectos del Bachillerato de Excelencia del IES Carmen Martín Gaite."
