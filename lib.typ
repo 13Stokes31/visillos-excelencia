@@ -4,11 +4,11 @@
   anchura: auto,
   altura: auto,
   borde: none,
-  ubicacion: none, // Ahora 'ubicacion' recibirá la imagen ya cargada
+  ubicacion: none, // la imagen ya cargada, p. ej. image("Imágenes/foto.png")
   descripcion: none,
 ) = {
   figure(
-    box(stroke: borde, ubicacion), // <--- Quitamos la palabra 'image' de aquí
+    box(stroke: borde, ubicacion),
     caption: descripcion
   )
 }
