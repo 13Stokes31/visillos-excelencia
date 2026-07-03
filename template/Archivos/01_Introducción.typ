@@ -1,4 +1,4 @@
-#import "@preview/visillos-excelencia:0.1.0": *
+#import "@preview/visillos-excelencia:0.2.0": *
 
 // Escribimos a partir de aquí
 
@@ -23,7 +23,8 @@
   #colbreak()
   #lorem(30)
   #insertar-imagen(
-    ubicacion: image("Imágenes/reliquias.png", width: 90%),
+    ubicacion: image("Imágenes/reliquias.png"),
+    anchura: 90%,
     borde: 1pt,
     descripcion: "Las reliquias de la muerte. Es un logo muy bonito"
   )

@@ -49,20 +49,26 @@ En el archivo `main.typ`, encontrarás la función `proyecto` que configura todo
 - `fecha`: La fecha de entrega o defensa.
 - `logo`: La imagen del logo para la portada (por defecto `image("Logo.svg", width: 30%)`).
 - `fuente`: La tipografía del documento. Se recomienda "Libertinus Serif" (incluida en Typst) o "Times New Roman" si la tienes instalada localmente.
+- `abstract`, `resumen`, `agradecimientos`: Las páginas iniciales. La plantilla les pone título, página propia, numeración romana y entrada en el índice.
+- `doble-cara`: Por defecto `false`. Ponlo a `true` si vas a imprimir a doble cara: cada capítulo abrirá en página impar (insertando páginas en blanco donde haga falta) y los números de página irán en el lado exterior.
+
+Además, la plantilla numera figuras, tablas y ecuaciones **por capítulo** (Figura 2.1, ecuación (3.1)…), rellena el título y el autor en las propiedades del PDF, y muestra el capítulo actual en la cabecera de cada página.
 
 ## Ejemplo de main.typ
 
 ```typst
-#import "@preview/visillos-excelencia:0.1.0": *
+#import "@preview/visillos-excelencia:0.2.0": *
 
 #show: proyecto.with(
   titulo: "Impacto de la Inteligencia Artificial en la Educación",
   autor: "Nombre del Alumno",
   supervisor: "Nombre del Profesor",
   fecha: "Mayo 2026",
+  abstract: include "Archivos/00_1_Abstract.typ",
+  resumen: include "Archivos/00_2_Resumen.typ",
+  agradecimientos: include "Archivos/00_3_Agradecimientos.typ",
 )
 
-#include "Archivos/00_1_Abstract.typ"
 #include "Archivos/01_Introducción.typ"
 // Añade el resto de tus archivos aquí...
 ```
