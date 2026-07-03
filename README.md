@@ -52,9 +52,11 @@ En el archivo `main.typ`, encontrarás la función `proyecto` que configura todo
 - `tamano-fuente`: Tamaño del texto (por defecto `12pt`). Los títulos escalan con él.
 - `interlineado`: Interlineado del texto (por defecto `1em`).
 - `color-acento`: Color de los títulos de capítulo (por defecto `rgb("#279985")`).
-- `abstract`, `resumen`, `agradecimientos`: Las páginas iniciales. La plantilla les pone título, página propia, numeración romana y entrada en el índice. Omite las que no quieras (`none`).
-- `bibliografia`: La bibliografía, p. ej. `bibliography("referencias.yaml", style: "apa", title: "Bibliografía")`. Va al final del documento; `none` para omitirla.
-- `lista-figuras`, `lista-tablas`: Por defecto `true`. Las listas van al final, después de la bibliografía; ponlas a `false` si no las quieres.
+- `abstract`, `resumen`, `agradecimientos`: Las páginas iniciales. La plantilla les pone título, página propia, numeración romana y entrada en el índice.
+- `bibliografia`: La bibliografía, p. ej. `bibliography("referencias.yaml", style: "apa", title: "Bibliografía")`. Va al final del documento.
+- `lista-figuras`, `lista-tablas`: Las listas van al final, después de la bibliografía. Por defecto (`auto`) cada una aparece solo si el documento tiene figuras/tablas; con `true` aparece siempre y con `false` nunca.
+
+Cualquier pieza opcional (abstract, resumen, agradecimientos, bibliografía y listas) se quita igual: con `false` o `none`.
 - `doble-cara`: Por defecto `false`. Ponlo a `true` si vas a imprimir a doble cara: cada capítulo abrirá en página impar (insertando páginas en blanco donde haga falta) y los números de página irán en el lado exterior.
 
 Además, la plantilla numera figuras, tablas y ecuaciones **por capítulo** (Figura 2.1, ecuación (3.1)…), rellena el título y el autor en las propiedades del PDF, y muestra el capítulo actual en la cabecera de cada página.

@@ -46,15 +46,18 @@
   tamano-fuente: 12pt,
   interlineado: 1em,
   color-acento: rgb("#279985"),
-  abstract: none,          // contenido, o none para omitirlo
-  resumen: none,           // contenido, o none para omitirlo
-  agradecimientos: none,   // contenido, o none para omitirlo
+  // Todas las piezas opcionales se quitan igual: con none o con false.
+  abstract: none,          // contenido para incluirlo
+  resumen: none,           // contenido para incluirlo
+  agradecimientos: none,   // contenido para incluirlo
   bibliografia: none,      // p. ej. bibliography("referencias.yaml", style: "apa", title: "Bibliografía")
-  lista-figuras: true,     // lista de figuras al final del documento
-  lista-tablas: true,      // lista de tablas al final del documento
+  lista-figuras: auto,     // auto: solo si hay figuras · true: siempre · false/none: nunca
+  lista-tablas: auto,      // auto: solo si hay tablas · true: siempre · false/none: nunca
   doble-cara: false,       // true: capítulos en página impar (para imprimir a doble cara)
   body,
 ) = {
+  // ¿Está apagada una pieza opcional? (none y false funcionan igual)
+  let apagado(v) = v == none or v == false
 
   // Metadatos del PDF
   set document(title: a-texto(titulo), author: a-texto(autor))
@@ -162,9 +165,9 @@
     heading(level: 1, numbering: none, outlined: true, nombre)
     cuerpo
   }
-  if abstract != none { portadilla([Abstract], abstract) }
-  if resumen != none { portadilla([Resumen], resumen) }
-  if agradecimientos != none { portadilla([Agradecimientos], agradecimientos) }
+  if not apagado(abstract) { portadilla([Abstract], abstract) }
+  if not apagado(resumen) { portadilla([Resumen], resumen) }
+  if not apagado(agradecimientos) { portadilla([Agradecimientos], agradecimientos) }
 
   // Índice general (capítulos en negrita)
   {
@@ -201,21 +204,24 @@
   body
 
   // Bibliografía
-  if bibliografia != none { bibliografia }
+  if not apagado(bibliografia) { bibliografia }
 
-  // Listas finales de figuras y tablas, con el número "capítulo.n" de cada una
-  let lista-de(nombre, tipo) = {
-    heading(level: 1, numbering: none, outlined: true, nombre)
-    show outline.entry: it => context {
-      let el = it.element
-      v(12pt, weak: true)
-      strong(it.indented(
-        [#el.supplement #numero-en-capitulo(counter(figure.where(kind: tipo)), el.location(), "1.1")],
-        it.inner(),
-      ))
+  // Listas finales de figuras y tablas, con el número "capítulo.n" de cada una.
+  // Con auto, la lista solo aparece si el documento tiene elementos de su tipo.
+  let lista-de(nombre, tipo, modo) = context {
+    if modo == true or (modo == auto and query(figure.where(kind: tipo)).len() > 0) {
+      heading(level: 1, numbering: none, outlined: true, nombre)
+      show outline.entry: it => context {
+        let el = it.element
+        v(12pt, weak: true)
+        strong(it.indented(
+          [#el.supplement #numero-en-capitulo(counter(figure.where(kind: tipo)), el.location(), "1.1")],
+          it.inner(),
+        ))
+      }
+      outline(title: none, target: figure.where(kind: tipo))
     }
-    outline(title: none, target: figure.where(kind: tipo))
   }
-  if lista-figuras { lista-de([Lista de figuras], image) }
-  if lista-tablas { lista-de([Lista de tablas], table) }
+  lista-de([Lista de figuras], image, lista-figuras)
+  lista-de([Lista de tablas], table, lista-tablas)
 }

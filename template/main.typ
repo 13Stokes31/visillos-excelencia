@@ -16,13 +16,14 @@
   doble-cara: false, // Pon true si vas a imprimir a doble cara (capítulos en página impar)
 
   // Páginas iniciales: la plantilla les pone título, página propia y entrada en el índice.
-  // Si no quieres alguna, borra su línea (o pon none).
+  // Cualquier pieza opcional se quita poniendo false (o none), o borrando su línea.
   abstract: include "Archivos/00_1_Abstract.typ",
   resumen: include "Archivos/00_2_Resumen.typ",
   agradecimientos: include "Archivos/00_3_Agradecimientos.typ",
 
   // Bibliografía y listas finales (van al final del documento, en este orden).
-  // Si no quieres alguna: bibliografia: none, lista-figuras: false, lista-tablas: false
+  // Las listas de figuras y tablas aparecen solas si el documento las tiene;
+  // fuerza con lista-figuras: true/false (igual lista-tablas).
   bibliografia: bibliography("referencias.yaml", style: "apa", title: "Bibliografía"),
 )
 
