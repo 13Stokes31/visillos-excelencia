@@ -45,3 +45,9 @@ typst compile --package-path /tmp/pk main.typ /tmp/visillos.pdf
       debe compilar igual (los parámetros nuevos son opcionales). Los capítulos que
       importaban la 0.2.0 siguen funcionando, aunque cargan las dos versiones;
       conviene quitarles el import.
+- [ ] **Convocatoria y fuente de portada.** Con `convocatoria: [Proyecto presentado
+      para el …]` el texto sale centrado al pie de la portada; con
+      `fuente-portada: "New Computer Modern"` cambia solo la portada.
+- [ ] **Intercambio con luisito-u.** Copiar `template/` de luisito-u, cambiar su
+      import por `@preview/visillos-excelencia:0.3.0` y compilar: sale el
+      documento con la portada de visillos, sin errores.

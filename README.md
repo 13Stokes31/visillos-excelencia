@@ -50,7 +50,9 @@ En el archivo `main.typ`, encontrarás la función `proyecto` que configura todo
 - `lugar`: Por defecto, "Navalcarnero".
 - `fecha`: La fecha de entrega o defensa.
 - `logo`: La imagen del logo para la portada (por defecto `image("Logo.svg", width: 30%)`).
+- `convocatoria`: Texto opcional al pie de la portada, por ejemplo el premio al que se presenta el proyecto.
 - `fuente`: La tipografía del documento. Se recomienda "Libertinus Serif" (incluida en Typst) o "Times New Roman" si la tienes instalada localmente.
+- `fuente-portada`: Tipografía solo para la portada (por defecto, la misma que `fuente`).
 - `tamano-fuente`: Tamaño del texto (por defecto `12pt`). Los títulos escalan con él.
 - `interlineado`: Interlineado del texto (por defecto `1em`).
 - `color-acento`: Color de los títulos de capítulo (por defecto `rgb("#279985")`).
@@ -95,6 +97,10 @@ Además, la plantilla numera figuras, tablas y ecuaciones **por capítulo** (Fig
 #show: anexos
 #include "Archivos/04_Anexos.typ"
 ```
+
+## Plantilla hermana: luisito-u
+
+[luisito-u](https://github.com/13Stokes31/luisito-u) acepta exactamente la misma configuración con otra portada (la de los premios de ciencia para Bachillerato). Un proyecto escrito con una se pasa a la otra cambiando solo la línea del `#import`.
 
 ## Licencia
 

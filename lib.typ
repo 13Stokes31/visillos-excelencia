@@ -83,7 +83,9 @@
   lugar: [Navalcarnero],
   fecha: [Mayo 2026],
   logo: none,
+  convocatoria: none,      // texto opcional al pie de la portada, p. ej. el premio al que se presenta
   fuente: "Libertinus Serif",
+  fuente-portada: none,    // fuente de la portada; con none, la misma del texto
   tamano-fuente: 12pt,
   interlineado: 1em,
   color-acento: rgb("#279985"),
@@ -138,28 +140,35 @@
   }
 
   // Portada
-  v(2fr)
-  if logo != none {
-    align(center, box(radius: 3pt, clip: true, logo))
-  }
-  v(1.6fr)
-  align(center, text(14pt, "Proyecto de Excelencia"))
-  v(1fr)
-  align(center, text(30pt, hyphenate: false, weight: "bold", upper(titulo)))
-  v(1.6fr)
-  align(center, text(20pt, [Realizado por: ] + autor))
-  v(1.6fr)
-  align(center, text(14pt, instituto))
-  v(0.6fr)
-  align(center, text(14pt, smallcaps[Bachillerato de Excelencia]))
-  v(1fr)
-  align(center, text(14pt, lugar + [, ] + fecha))
-  v(0.6fr)
-  line(start: (25%, 0pt), end: (75%, 0pt))
-  v(0.6fr)
-  align(center, text(14pt, [Supervisado por: ] + supervisor))
-  v(1.6fr)
+  {
+    set text(font: fuente-portada) if fuente-portada != none
+    v(2fr)
+    if logo != none {
+      align(center, box(radius: 3pt, clip: true, logo))
+    }
+    v(1.6fr)
+    align(center, text(14pt, "Proyecto de Excelencia"))
+    v(1fr)
+    align(center, text(30pt, hyphenate: false, weight: "bold", upper(titulo)))
+    v(1.6fr)
+    align(center, text(20pt, [Realizado por: ] + autor))
+    v(1.6fr)
+    align(center, text(14pt, instituto))
+    v(0.6fr)
+    align(center, text(14pt, smallcaps[Bachillerato de Excelencia]))
+    v(1fr)
+    align(center, text(14pt, lugar + [, ] + fecha))
+    v(0.6fr)
+    line(start: (25%, 0pt), end: (75%, 0pt))
+    v(0.6fr)
+    align(center, text(14pt, [Supervisado por: ] + supervisor))
+    v(1.6fr)
 
+    if not apagado(convocatoria) {
+      v(1fr)
+      align(center, text(12pt, convocatoria))
+    }
+  }
   salto()
 
   // Numeración romana para las páginas iniciales y el índice
