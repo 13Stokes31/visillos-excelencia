@@ -1,56 +1,47 @@
-- Que sea true o false, si o si enlace al archivo con ese nombre:
-    abstract: include "Archivos/00_1_Abstract.typ",
-    resumen: include "Archivos/00_2_Resumen.typ",
-    agradecimientos: include "Archivos/00_3_Agradecimientos.typ",
-- Logo sea una dupla en el que haya que poner el nombre entre comillas y el tamaño: image("Logo.svg", width: 30%) -> ("Logo.svg", 30%)
-- Simplificar bibliografía. Un único documento llamado referencias.yml. Por lo tanto cambiar: bibliografia: bibliography("referencias.yaml", style: "apa", title: "Bibliografía"), -> bibliografia: ("apa", "Bibliografía"),
-- Mejorar la plantilla, añadir los diferentes estilos que puede tener la bibliografía, poner directamente lista-figuras: true, lista-tablas: true, bien puesto como ejemplo comentado, algo tal que así:
+# ROADMAP — visillos-excelencia
 
+Lo que está por hacer o por decidir. Lo ya hecho pero sin comprobar está en
+`TESTING.md`.
 
-#import "@preview/visillos-excelencia:0.2.0": *
+## Pendiente
 
-// Aquí configuras los datos de tu proyecto
-#show: proyecto.with(
-  titulo: "Las reliquias de la muerte",
-  autor: "Harry Potter",
-  supervisor: "Albus Dumbledore",
-  instituto: "IES Carmen Martín Gaite",
-  lugar: "Navalcarnero",
-  fecha: "Mayo 2026", // Cambia la fecha a la de entrega
-  logo: image("Logo.svg", width: 30%),
-  fuente: "Libertinus Serif", // Puedes cambiar a "Times New Roman" si la tienes instalada
-  // tamano-fuente: 12pt,     // Descomenta para ajustar el tamaño del texto
-  // interlineado: 1em,       // Descomenta para ajustar el interlineado
-  // color-acento: rgb("#279985"), // Descomenta para cambiar el color de los títulos
-  doble-cara: false, // Pon true si vas a imprimir a doble cara (capítulos en página impar)
+### Publicar la 0.3.0 en Universe
+Estado: **pendiente** (código listo en local).
+Pasos según la receta de meshpad: commit, etiqueta `v0.3.0` (el README enlaza la
+miniatura a esa etiqueta), push, copiar `lib.typ`, `LICENSE`, `README.md`,
+`typst.toml`, `thumbnail.png` y `template/` al fork `13Stokes31/packages` y abrir el
+PR `visillos-excelencia:0.3.0`. Las versiones 0.1.0 y 0.2.0 no tienen etiqueta en git.
 
-  // Páginas iniciales: la plantilla les pone título, página propia y entrada en el índice.
-  // Cualquier pieza opcional se quita poniendo false (o none), o borrando su línea.
-  abstract: include "Archivos/00_1_Abstract.typ",
-  resumen: include "Archivos/00_2_Resumen.typ",
-  agradecimientos: include "Archivos/00_3_Agradecimientos.typ",
+### Mantener a la par con luisito-u
+Estado: **abierto**. `luisito-u` es una copia de esta plantilla con otra portada y
+otras fuentes, y comparte la misma configuración del `main.typ` (basta con cambiar
+el import). Cualquier arreglo o parámetro nuevo de `lib.typ` hay que llevarlo
+también a `luisito-u`.
 
-  // Bibliografía y listas finales (van al final del documento, en este orden).
-  // Las listas de figuras y tablas aparecen solas si el documento las tiene;
-  // lista-figuras: true,
-  // lista-tablas: true,
-  // Los estilos que se pueden usar con "apa",...
-  bibliografia: bibliography("referencias.yaml", style: "apa", title: "Bibliografía"),
-)
+### ¿Bibliografía antes de los anexos?
+Estado: **por decidir**. Ahora el orden es: capítulos → anexos → glosario →
+bibliografía → listas. En muchos trabajos académicos la bibliografía va antes de los
+anexos. Cambiarlo moverá la bibliografía en los proyectos de los alumnos que
+actualicen.
 
-// ==========================================
-// INCLUYE AQUÍ LOS ARCHIVOS DE TU PROYECTO
-// ==========================================
+### Versión mínima de Typst sin comprobar
+Estado: **abierto**. `typst.toml` dice `compiler = "0.13.0"`, pero solo se ha
+compilado con 0.15. Comprobarlo con 0.13 o subir el mínimo.
 
-// Capítulos principales
-#include "Archivos/01_Introducción.typ"
-#include "Archivos/02_Capítulo 1.typ"
-#include "Archivos/02_Capítulo 2.typ"
-#include "Archivos/02_Capítulo 3.typ"
-#include "Archivos/02_Capítulo 4.typ"
-// #include "Archivos/02_Capítulo 5.typ" // Quita las barras (//) para añadir más capítulos
+### Validar parámetros (menor)
+Estado: **propuesta**. `lista-figuras`, `lista-tablas`, `doble-cara` y
+`contar-palabras` aceptan cualquier valor sin avisar. Un `assert` con mensaje claro
+ayudaría a los alumnos que se equivoquen al escribirlos.
 
-// Páginas finales
-#include "Archivos/03_Conclusión.typ"
-#include "Archivos/04_Anexos.typ"
-#include "Archivos/05_Glosario.typ"
+### Pruebas automáticas (menor)
+Estado: **propuesta**. Un documento de prueba en `tests/` con dos capítulos,
+figuras, tablas, ecuaciones, referencias y anexos, compilado a una y doble cara.
+De momento basta con `TESTING.md`.
+
+## Descartado (no re-proponer)
+
+- **`abstract: true` buscando solo su fichero.** Un paquete no puede abrir ficheros
+  de la carpeta del alumno: las rutas tienen que escribirse en el `main.typ`.
+- **Logo como tupla `("Logo.svg", 30%)`** y **bibliografía como
+  `("apa", "Bibliografía")`**: mismo problema de rutas, quitan flexibilidad y
+  cambiarían el `main.typ` de quien ya usa la plantilla.

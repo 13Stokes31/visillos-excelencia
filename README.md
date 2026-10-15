@@ -4,7 +4,7 @@ An unofficial Typst template for Excellence Baccalaureate research projects at I
 
 Plantilla no oficial para la redacción y formateo de los Proyectos del Bachillerato de Excelencia, diseñada específicamente para el IES Carmen Martín Gaite (Navalcarnero).
 
-![Portada de la plantilla](https://github.com/typst/packages/raw/main/packages/preview/visillos-excelencia/0.2.0/thumbnail.png)
+![Portada de la plantilla](https://github.com/13Stokes31/visillos-excelencia/raw/v0.3.0/thumbnail.png)
 
 Esta plantilla automatiza la creación de la portada, los índices (general, de figuras y de tablas), el formato de página, los márgenes, la numeración de ecuaciones y la bibliografía, permitiendo a los alumnos centrarse exclusivamente en el contenido de su investigación.
 
@@ -37,6 +37,8 @@ Al inicializar la plantilla, obtendrás una estructura de carpetas lista para tr
 - `referencias.yaml`: Archivo donde guardarás tu bibliografía en formato YAML o BibTeX.
 - `Archivos/`: Una carpeta pre-organizada con los diferentes capítulos (Abstract, Introducción, Capítulo 1, etc.) y una subcarpeta para tus imágenes.
 
+Los capítulos **no necesitan importar la plantilla**: basta con el `#import` del `main.typ`. Así, para pasar el proyecto a otra versión (o a otra plantilla con la misma configuración) solo se cambia esa línea. Si en un capítulo quieres usar una función del paquete, como `insertar-imagen`, impórtala en ese capítulo.
+
 ## Configuración del proyecto
 
 En el archivo `main.typ`, encontrarás la función `proyecto` que configura todo el documento. Puedes modificar los siguientes parámetros:
@@ -58,13 +60,23 @@ En el archivo `main.typ`, encontrarás la función `proyecto` que configura todo
 
 Cualquier pieza opcional (abstract, resumen, agradecimientos, bibliografía y listas) se quita igual: con `false` o `none`.
 - `doble-cara`: Por defecto `false`. Ponlo a `true` si vas a imprimir a doble cara: cada capítulo abrirá en página impar (insertando páginas en blanco donde haga falta) y los números de página irán en el lado exterior.
+- `contar-palabras`: Por defecto `false`. Con `true`, debajo del índice aparece la extensión del trabajo: las palabras desde el primer capítulo hasta el final de los anexos. No cuenta portada, páginas iniciales, índice, bibliografía, listas, figuras, tablas ni ecuaciones.
+
+## Anexos
+
+Escribe `#show: anexos` en el `main.typ` justo antes de incluir los anexos. A partir de ahí:
+
+- el título `= Anexos` sale sin número;
+- cada `==` es un anexo numerado: «Anexo I. Título», «Anexo II. Título»…;
+- las figuras, tablas y ecuaciones se numeran con el anexo: Figura I.1, Tabla II.3…;
+- si pones una etiqueta al anexo (`== Fotografías <anexo-fotos>`), `@anexo-fotos` escribe «Anexo II» con enlace.
 
 Además, la plantilla numera figuras, tablas y ecuaciones **por capítulo** (Figura 2.1, ecuación (3.1)…), rellena el título y el autor en las propiedades del PDF, y muestra el capítulo actual en la cabecera de cada página.
 
 ## Ejemplo de main.typ
 
 ```typst
-#import "@preview/visillos-excelencia:0.2.0": *
+#import "@preview/visillos-excelencia:0.3.0": *
 
 #show: proyecto.with(
   titulo: "Impacto de la Inteligencia Artificial en la Educación",
@@ -78,7 +90,10 @@ Además, la plantilla numera figuras, tablas y ecuaciones **por capítulo** (Fig
 )
 
 #include "Archivos/01_Introducción.typ"
-// Añade el resto de tus archivos aquí...
+// Añade el resto de tus capítulos aquí...
+
+#show: anexos
+#include "Archivos/04_Anexos.typ"
 ```
 
 ## Licencia

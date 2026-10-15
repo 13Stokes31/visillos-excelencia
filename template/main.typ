@@ -1,4 +1,4 @@
-#import "@preview/visillos-excelencia:0.2.0": *
+#import "@preview/visillos-excelencia:0.3.0": *
 
 // Aquí configuras los datos de tu proyecto
 #show: proyecto.with(
@@ -14,6 +14,7 @@
   // interlineado: 1em,       // Descomenta para ajustar el interlineado
   // color-acento: rgb("#279985"), // Descomenta para cambiar el color de los títulos
   doble-cara: false, // Pon true si vas a imprimir a doble cara (capítulos en página impar)
+  contar-palabras: false, // Pon true para ver, tras el índice, cuántas palabras tiene el trabajo
 
   // Páginas iniciales: la plantilla les pone título, página propia y entrada en el índice.
   // Cualquier pieza opcional se quita poniendo false (o none), o borrando su línea.
@@ -21,10 +22,15 @@
   resumen: include "Archivos/00_2_Resumen.typ",
   agradecimientos: include "Archivos/00_3_Agradecimientos.typ",
 
-  // Bibliografía y listas finales (van al final del documento, en este orden).
-  // Las listas de figuras y tablas aparecen solas si el documento las tiene;
-  // fuerza con lista-figuras: true/false (igual lista-tablas).
+  // Bibliografía: tus fuentes van en referencias.yaml. Estilos habituales:
+  // "apa", "ieee", "mla", "chicago-author-date", "harvard-cite-them-right",
+  // "iso-690-author-date", "vancouver".
   bibliografia: bibliography("referencias.yaml", style: "apa", title: "Bibliografía"),
+
+  // Listas de figuras y tablas (van al final, tras la bibliografía). Por defecto
+  // salen solas si el documento tiene figuras o tablas. Para forzarlas:
+  // lista-figuras: true,  // o false para quitarla
+  // lista-tablas: true,   // o false para quitarla
 )
 
 // ==========================================
@@ -41,5 +47,8 @@
 
 // Páginas finales
 #include "Archivos/03_Conclusión.typ"
+
+// A partir de aquí, cada "==" es un anexo numerado (Anexo I, Anexo II…)
+#show: anexos
 #include "Archivos/04_Anexos.typ"
 #include "Archivos/05_Glosario.typ"

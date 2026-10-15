@@ -1,3 +1,5 @@
+#import "@preview/wordometer:0.1.6": word-count-of
+
 //// Funciones ////
 
 // Extrae el texto plano de un contenido sencillo (para los metadatos del PDF).
@@ -11,10 +13,25 @@
   else { "" }
 }
 
+// ¿Está esta ubicación dentro de los anexos? (después de la marca que pone `anexos`)
+#let en-anexos(ubicacion) = query(selector(<visillos-anexos>).before(ubicacion)).len() > 0
+
+// Prefijo de la numeración por capítulo: el número del capítulo,
+// o el del anexo en romanos si estamos en los anexos.
+#let prefijo(ubicacion) = {
+  let h = counter(heading).at(ubicacion)
+  if en-anexos(ubicacion) and h.len() > 1 and h.at(1) > 0 {
+    numbering("I", h.at(1))
+  } else {
+    str(h.first())
+  }
+}
+
 // Número "capítulo.n" de una figura/tabla/ecuación, calculado en SU ubicación
 // (así las referencias y las listas muestran el capítulo correcto).
-#let numero-en-capitulo(contador, ubicacion, patron) = {
-  numbering(patron, counter(heading).at(ubicacion).first(), ..contador.at(ubicacion))
+#let numero-en-capitulo(contador, ubicacion, ecuacion: false) = {
+  let n = prefijo(ubicacion) + "." + str(contador.at(ubicacion).first())
+  if ecuacion { "(" + n + ")" } else { n }
 }
 
 #let insertar-imagen(
@@ -32,6 +49,30 @@
     }),
     caption: descripcion
   )
+}
+
+// Anexos: se activa con `#show: anexos` antes de incluirlos. Cada `==` es un
+// anexo ("Anexo I.", "Anexo II."…), con sus figuras numeradas I.1, I.2…
+// y citable con @etiqueta ("Anexo I").
+#let anexos(body) = {
+  [#metadata(none) <visillos-anexos>]
+  // Los títulos sin numerar no avanzan el contador: se avanza a mano para que
+  // los anexos empiecen en I aunque el último capítulo tenga apartados.
+  counter(heading).step(level: 1)
+  set heading(numbering: (..n) => {
+    let p = n.pos()
+    if p.len() == 2 { "Anexo " + numbering("I", p.at(1)) + "." }
+    else if p.len() > 2 { numbering("I.1.", ..p.slice(1)) }
+  })
+  show heading.where(level: 1): set heading(numbering: none)
+  // Cada anexo reinicia la numeración de figuras, tablas y ecuaciones
+  show heading.where(level: 2): it => {
+    counter(figure.where(kind: image)).update(0)
+    counter(figure.where(kind: table)).update(0)
+    counter(math.equation).update(0)
+    it
+  }
+  body
 }
 
 #let proyecto(
@@ -54,6 +95,7 @@
   lista-figuras: auto,     // auto: solo si hay figuras · true: siempre · false/none: nunca
   lista-tablas: auto,      // auto: solo si hay tablas · true: siempre · false/none: nunca
   doble-cara: false,       // true: capítulos en página impar (para imprimir a doble cara)
+  contar-palabras: false,  // true: muestra tras el índice las palabras del primer capítulo al último anexo
   body,
 ) = {
   // ¿Está apagada una pieza opcional? (none y false funcionan igual)
@@ -75,8 +117,9 @@
   set text(tamano-fuente, font: fuente, lang: "es")
 
   // Numeración por capítulo: Figura 2.1, Tabla 3.2, ecuación (1.4)
-  set math.equation(numbering: n => context numbering("(1.1)", counter(heading).get().first(), n))
-  set figure(numbering: n => context numbering("1.1", counter(heading).get().first(), n))
+  // (en los anexos, con el número del anexo: Figura I.1)
+  set math.equation(numbering: n => context "(" + prefijo(here()) + "." + str(n) + ")")
+  set figure(numbering: n => context prefijo(here()) + "." + str(n))
 
   // Referencias cruzadas: el capítulo se calcula en la ubicación del elemento
   show ref: it => {
@@ -84,9 +127,11 @@
     if el == none { return it }
     let ubi = el.location()
     if el.func() == math.equation {
-      link(ubi, numero-en-capitulo(counter(math.equation), ubi, "(1.1)"))
+      link(ubi, numero-en-capitulo(counter(math.equation), ubi, ecuacion: true))
     } else if el.func() == figure {
-      link(ubi, [#el.supplement #numero-en-capitulo(counter(figure.where(kind: el.kind)), ubi, "1.1")])
+      link(ubi, [#el.supplement #numero-en-capitulo(counter(figure.where(kind: el.kind)), ubi)])
+    } else if el.func() == heading and el.level == 2 and en-anexos(ubi) {
+      link(ubi, [Anexo #numbering("I", counter(heading).at(ubi).at(1))])
     } else {
       it
     }
@@ -178,6 +223,14 @@
     outline(depth: 2, indent: auto)
   }
 
+  // Extensión del trabajo: cuenta el texto del cuerpo (capítulos y anexos), sin
+  // figuras, tablas ni ecuaciones; las páginas iniciales y la bibliografía van aparte.
+  if contar-palabras {
+    let palabras = word-count-of(body, exclude: figure).words
+    v(1.5em)
+    align(right, text(style: "italic")[Extensión del trabajo: #palabras palabras])
+  }
+
   // Cuerpo del documento: numeración arábiga y cabecera con el capítulo actual
   set page(
     numbering: "1",
@@ -215,7 +268,7 @@
         let el = it.element
         v(12pt, weak: true)
         strong(it.indented(
-          [#el.supplement #numero-en-capitulo(counter(figure.where(kind: tipo)), el.location(), "1.1")],
+          [#el.supplement #numero-en-capitulo(counter(figure.where(kind: tipo)), el.location())],
           it.inner(),
         ))
       }

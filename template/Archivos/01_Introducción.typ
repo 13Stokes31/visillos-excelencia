@@ -1,5 +1,3 @@
-#import "@preview/visillos-excelencia:0.2.0": *
-
 // Escribimos a partir de aquí
 
 = Introducción
@@ -22,12 +20,10 @@
   #lorem(100)
   #colbreak()
   #lorem(30)
-  #insertar-imagen(
-    ubicacion: image("Imágenes/reliquias.png"),
-    anchura: 90%,
-    borde: 1pt,
-    descripcion: "Las reliquias de la muerte. Es un logo muy bonito"
-  )
+  #figure(
+    box(stroke: 1pt, image("Imágenes/reliquias.png", width: 90%)),
+    caption: [Las reliquias de la muerte. Es un logo muy bonito],
+  ) <reliquias>
 ]
 
 #lorem(100)
