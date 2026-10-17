@@ -6,11 +6,10 @@ Lo que está por hacer o por decidir. Lo ya hecho pero sin comprobar está en
 ## Pendiente
 
 ### Publicar la 0.3.0 en Universe
-Estado: **pendiente** (código listo en local).
-Pasos según la receta de meshpad: commit, etiqueta `v0.3.0` (el README enlaza la
-miniatura a esa etiqueta), push, copiar `lib.typ`, `LICENSE`, `README.md`,
-`typst.toml`, `thumbnail.png` y `template/` al fork `13Stokes31/packages` y abrir el
-PR `visillos-excelencia:0.3.0`. Las versiones 0.1.0 y 0.2.0 no tienen etiqueta en git.
+Estado: **PR abierto, falta el merge**. PR typst/packages#6140 enviado el
+2026-10-17 con los tres checks en verde; etiqueta `v0.3.0` en el repo. Si los
+revisores piden cambios, corregir, mover la etiqueta (`git tag -f` + push --force)
+y copiar los ficheros a la rama `visillos-excelencia-0.3.0` del fork.
 
 ### Mantener a la par con luisito-u
 Estado: **abierto**. `luisito-u` es una copia de esta plantilla con otra portada y
