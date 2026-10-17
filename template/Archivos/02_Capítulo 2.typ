@@ -24,11 +24,17 @@ Todo el material, salvo el termómetro, es el que hay en cualquier cocina (@tab-
 
 La @fig-montaje muestra el montaje: la sonda del termómetro se introduce en el centro del café, a media altura, y se sujeta para que no toque las paredes de la taza.
 
-// Una imagen dentro de una figura, con borde: box(stroke: …) la enmarca.
-// La ruta es relativa a ESTE fichero: las imágenes están en Archivos/Imágenes.
+// Una imagen dentro de una figura. La ruta es relativa a ESTE fichero: las
+// imágenes están en Archivos/Imágenes.
+// - Borde: box(stroke: 1pt, …) la enmarca en negro. Para quitarlo, deja solo image(…).
+// - Nota (opcional, estilo APA): #[texto] <nota> debajo de la imagen. La plantilla
+//   le pone delante «Nota.». Para quitarla, borra esa línea.
 #figure(
-  box(stroke: 0.5pt + gray, image("Imágenes/montaje.svg", width: 80%)),
-  caption: [Montaje del experimento. Elaboración propia],
+  [
+    #box(stroke: 1pt, image("Imágenes/montaje.svg", width: 80%))
+    #[Elaboración propia.] <nota>
+  ],
+  caption: [Montaje del experimento],
 ) <fig-montaje>
 
 Para comparar, preparamos dos tazas iguales: una sin tapa y otra con tapa (@fig-tazas).

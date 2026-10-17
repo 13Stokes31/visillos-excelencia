@@ -44,7 +44,8 @@ A los 40 minutos, el café de la taza tapada está 10.3 °C más caliente que el
 La @fig-curvas representa todas las medidas junto con la curva del modelo de Newton, ecuación @eq-solucion, para cada taza.
 
 #figure(
-  lq.diagram(
+  [
+  #lq.diagram(
     width: 12cm,
     height: 7cm,
     xlabel: [Tiempo (min)],
@@ -53,8 +54,10 @@ La @fig-curvas representa todas las medidas junto con la curva del modelo de New
     lq.plot(tiempo, con-tapa, stroke: none, mark: "s", color: naranja, label: [Con tapa]),
     lq.plot(lq.linspace(0, 40), modelo(k-sin), mark: none, color: azul),
     lq.plot(lq.linspace(0, 40), modelo(k-con), mark: none, color: naranja),
-  ),
-  caption: [Temperatura del café frente al tiempo. Los puntos son las medidas y las líneas, el modelo de Newton],
+  )
+  #[Los puntos son las medidas y las líneas, el modelo de Newton con los valores de $k$ de la @tab-ajuste.] <nota>
+  ],
+  caption: [Temperatura del café frente al tiempo],
 ) <fig-curvas>
 
 == Ajuste al modelo
@@ -75,14 +78,18 @@ Si el enfriamiento sigue la ley de Newton, al representar $ln(T - T_a)$ frente a
 
 Los resultados del ajuste por mínimos cuadrados están en la @tab-ajuste. El tiempo de semienfriamiento se calcula con la ecuación @eq-tiempo-medio.
 
+// La nota también sirve en las tablas: va después de table(…), dentro de la figura.
 #figure(
-  table(
+  [
+  #table(
     columns: 3,
     table.header[][*Sin tapa*][*Con tapa*],
     [Constante de enfriamiento $k$ (min#super[−1])], [0.0451], [0.0280],
     [Coeficiente de determinación $R^2$], [0.9997], [0.9997],
     [Tiempo de semienfriamiento $t_(1\/2)$ (min)], [15.4], [24.7],
     [Tiempo hasta bajar de 60 °C (min)], [11.2], [18.0],
-  ),
+  )
+  #[Ajuste por mínimos cuadrados de $ln(T - T_a)$ frente a $t$, con $T_a = 22.0$ °C.] <nota>
+  ],
   caption: [Resultados del ajuste al modelo de Newton],
 ) <tab-ajuste>

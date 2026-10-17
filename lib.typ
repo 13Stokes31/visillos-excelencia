@@ -203,6 +203,13 @@
 
   set heading(numbering: "1.")
 
+  // Nota debajo de una figura o tabla, al estilo APA. En el cuerpo de la figura,
+  // después de la imagen: #[Elaboración propia.] <nota>  →  «Nota. Elaboración propia.»
+  show <nota>: it => block(width: 100%, above: 0.8em, align(left, {
+    set par(first-line-indent: 0pt)
+    text(size: tamano-fuente - 2pt)[_Nota._ #it]
+  }))
+
   // Formato de las descripciones de figuras y tablas
   show figure.caption: set align(left)
   set figure.caption(position: top)
