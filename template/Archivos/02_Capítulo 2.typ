@@ -1,3 +1,6 @@
+// La función figura (borde y nota fáciles) está en funciones.typ.
+#import "funciones.typ": figura
+
 = Metodología <metodologia>
 
 == Material
@@ -24,23 +27,20 @@ Todo el material, salvo el termómetro, es el que hay en cualquier cocina (@tab-
 
 La @fig-montaje muestra el montaje: la sonda del termómetro se introduce en el centro del café, a media altura, y se sujeta para que no toque las paredes de la taza.
 
-// Una imagen dentro de una figura. La ruta es relativa a ESTE fichero: las
-// imágenes están en Archivos/Imágenes.
-// - Borde: box(stroke: 1pt, …) la enmarca en negro. Para quitarlo, deja solo image(…).
-// - Nota (opcional, estilo APA): #[texto] <nota> debajo de la imagen. La plantilla
-//   le pone delante «Nota.». Para quitarla, borra esa línea.
-#figure(
-  [
-    #box(stroke: 1pt, image("Imágenes/montaje.svg", width: 80%))
-    #[Elaboración propia.] <nota>
-  ],
-  caption: [Montaje del experimento],
+// Una imagen con borde y nota. Las imágenes están en Archivos/Imágenes.
+// borde: true o false; nota: opcional (bórrala si no la quieres).
+#figura(
+  "Imágenes/montaje.svg",
+  titulo: [Montaje del experimento],
+  ancho: 80%,
+  borde: true,
+  nota: [Elaboración propia.],
 ) <fig-montaje>
 
 Para comparar, preparamos dos tazas iguales: una sin tapa y otra con tapa (@fig-tazas).
 
 // Dos imágenes lado a lado: un grid de dos columnas dentro de una sola figura.
-#figure(
+#figura(
   grid(
     columns: 2,
     gutter: 2em,
@@ -48,7 +48,7 @@ Para comparar, preparamos dos tazas iguales: una sin tapa y otra con tapa (@fig-
     image("Imágenes/taza-con-tapa.svg", width: 4cm),
     [_a)_ Sin tapa], [_b)_ Con tapa],
   ),
-  caption: [Las dos tazas del experimento],
+  titulo: [Las dos tazas del experimento],
 ) <fig-tazas>
 
 == Procedimiento

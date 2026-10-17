@@ -79,22 +79,27 @@ Además, la plantilla numera figuras, tablas y ecuaciones **por capítulo** (Fig
 
 ## Figuras: borde y nota
 
-Las dos cosas son opcionales y se ponen a mano en cada figura (o tabla):
+La plantilla trae en `Archivos/funciones.typ` una función `figura` para poner
+borde y nota con un argumento. Se importa al principio del capítulo que la use:
 
 ```typst
-#figure(
-  [
-    #box(stroke: 1pt, image("Imágenes/foto.png", width: 80%))  // borde negro
-    #[Elaboración propia.] <nota>                            // nota debajo
-  ],
-  caption: [Título de la figura],
-)
+#import "funciones.typ": figura
+
+#figura(
+  "Imágenes/foto.png",          // ruta desde la carpeta Archivos
+  titulo: [Título de la figura],
+  ancho: 80%,                   // opcional
+  borde: true,                  // opcional: true (borde negro) o false
+  nota: [Elaboración propia.],  // opcional: «Nota. Elaboración propia.», estilo APA
+) <fig-foto>
 ```
 
-- **Borde:** `box(stroke: 1pt, …)` enmarca la imagen en negro. Sin borde, basta `image(…)`.
-- **Nota:** el texto con la etiqueta `<nota>` sale debajo, en letra pequeña y con
-  «*Nota.*» delante, como pide APA. Sirve para la fuente («Elaboración propia»,
-  «Adaptado de…») o para aclaraciones. Admite citas (`@etiqueta`).
+En lugar de la ruta puede ir una tabla o una gráfica: `#figura(table(…), titulo: […], nota: […])`.
+La nota sale debajo, en letra pequeña y con «*Nota.*» delante, y admite citas
+(`@etiqueta`). El `#figure` normal de Typst sigue funcionando igual.
+
+`funciones.typ` no depende de la plantilla: el cambio de una plantilla a otra sigue
+siendo solo la línea del `#import` del `main.typ`.
 
 ## Ejemplo de main.typ
 
