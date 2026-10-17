@@ -1,10 +1,11 @@
 #import "@preview/visillos-excelencia:0.3.0": *
 
-// Aquí configuras los datos de tu proyecto
+// Aquí configuras los datos de tu proyecto.
+// (El trabajo de ejemplo es inventado: sustituye los capítulos por los tuyos.)
 #show: proyecto.with(
-  titulo: "Las reliquias de la muerte",
-  autor: "Harry Potter",
-  supervisor: "Albus Dumbledore",
+  titulo: "¿Cuánto tarda en enfriarse un café?",
+  autor: "Lucía Martín Ortega y Daniel Ruiz Serrano",
+  supervisor: "Elena Gómez Prieto",
   instituto: "IES Carmen Martín Gaite",
   lugar: "Navalcarnero",
   fecha: "Mayo 2026", // Cambia la fecha a la de entrega

@@ -1,44 +1,48 @@
-// Escribimos a partir de aquí
+// La etiqueta <marco-teorico> permite citar este capítulo con @marco-teorico.
 
-= Capítulo 1 <capitulo_1>
+= Marco teórico <marco-teorico>
 
-#lorem(200)
+== Calor y temperatura
 
-#lorem(10). Tal y como aparece en @capitulo_1
+La *temperatura* mide lo agitadas que están, de media, las partículas de un cuerpo. El *calor* es la energía que pasa de un cuerpo a otro cuando están a distinta temperatura, siempre del más caliente al más frío. Una taza de café caliente cede calor al aire de la cocina hasta que los dos quedan a la misma temperatura.
 
-== Apartado a
+== Cómo pierde calor una taza de café
 
-#lorem(50)
+El café pierde calor por cuatro vías a la vez @vollmer2009:
 
-#columns(2, gutter: 11pt)[
-  #lorem(50)
-  #colbreak()
-  #lorem(30)
-  #figure(
-    table(
-      columns: 4,
-      [t], [1], [2], [3],
-      [y], [0.3s], [0.4s], [0.8s],
-    ),
-    caption: [Resultados de medida],
-  )
-]
+// Lista de términos: "/ Término: explicación".
+/ Conducción: a través de la cerámica de la taza y de la mesa.
+/ Convección: el aire caliente que está en contacto con el café sube y lo sustituye aire más frío.
+/ Radiación: todo cuerpo caliente emite radiación infrarroja.
+/ Evaporación: las moléculas más rápidas escapan de la superficie y se llevan energía. Es la vía que una tapa reduce más.
 
-#import "@preview/lilaq:0.6.0" as lq
+== La ley de enfriamiento de Newton
 
-#figure(
-  lq.diagram(
-    lq.plot((0, 1, 2, 3, 4), (5, 4, 2, 1, 2))
-  ),
-  caption: [Resultados de medida],
-)
+Newton propuso que la rapidez con la que se enfría un cuerpo es proporcional a la diferencia entre su temperatura $T$ y la temperatura del ambiente $T_a$:
 
-== Apartado b
+// Una ecuación en su propia línea: con espacios dentro de los $ $.
+// La etiqueta <eq-newton> sirve para citarla con @eq-newton. La plantilla
+// escribe solo el número, «(2.1)»: en el texto, pon delante «la ecuación».
+$ (d T) / (d t) = -k (T - T_a) $ <eq-newton>
 
-#lorem(600)
+donde $k > 0$ es la *constante de enfriamiento*, que depende de la forma del recipiente, del material y de si está tapado. Resolviendo la ecuación diferencial @eq-newton (la deducción completa está en el @anexo-deduccion) se obtiene la temperatura en cada instante:
 
-@electronic
+$ T(t) = T_a + (T_0 - T_a) e^(-k t) $ <eq-solucion>
 
-@harry
+siendo $T_0$ la temperatura inicial. Puede encontrarse una explicación divulgativa de estas fórmulas en @wikipedia-enfriamiento. Según la ecuación @eq-solucion, la diferencia de temperaturas $T - T_a$ disminuye de forma exponencial: el café se enfría deprisa al principio y cada vez más despacio.
 
-@kinetics
+=== Linealización
+
+Para comprobar si unos datos siguen la ecuación @eq-solucion es cómodo tomar logaritmos neperianos. Despejando $T - T_a$ y aplicando $ln$ a los dos lados:
+
+$ ln(T - T_a) = ln(T_0 - T_a) - k t $ <eq-lineal>
+
+Es decir, si representamos $ln(T - T_a)$ frente al tiempo, los puntos deben quedar sobre una recta de pendiente $-k$. Así, una regresión lineal nos da directamente la constante de enfriamiento.
+
+=== Tiempo de semienfriamiento
+
+Llamamos *tiempo de semienfriamiento* $t_(1\/2)$ al tiempo que tarda en reducirse a la mitad la diferencia de temperatura con el ambiente. Imponiendo $T - T_a = (T_0 - T_a) \/ 2$ en la ecuación @eq-solucion:
+
+$ t_(1\/2) = (ln 2) / k $ <eq-tiempo-medio>
+
+No depende de la temperatura inicial: el café tarda lo mismo en pasar de 80 °C a 51 °C que de 51 °C a 36.5 °C (con un ambiente de 22 °C).

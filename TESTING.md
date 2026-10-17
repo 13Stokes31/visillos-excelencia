@@ -51,3 +51,9 @@ typst compile --package-path /tmp/pk main.typ /tmp/visillos.pdf
 - [ ] **Intercambio con luisito-u.** Copiar `template/` de luisito-u, cambiar su
       import por `@preview/visillos-excelencia:0.3.0` y compilar: sale el
       documento con la portada de visillos, sin errores.
+- [ ] **Trabajo de ejemplo.** Leer el PDF de la plantilla de principio a fin: que no
+      haya «??» ni citas rotas, que las gráficas usen el mismo color para los puntos
+      y su curva, y que los números del texto (k, tiempos, 10.3 °C) coincidan con
+      las tablas.
+- [ ] **Datos desde el CSV.** Cambiar un valor en `Archivos/Datos/enfriamiento.csv`:
+      cambian a la vez la tabla del Anexo I y las dos gráficas.

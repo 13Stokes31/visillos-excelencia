@@ -1,39 +1,58 @@
-// Escribimos a partir de aquí
+= Metodología <metodologia>
 
-= Capítulo 2
+== Material
 
-#lorem(300)
+// Una tabla dentro de una figura: la plantilla le pone "Tabla 3.1" y la mete en
+// la lista de tablas. table.header marca la fila de títulos.
+#figure(
+  table(
+    columns: (auto, 1fr, auto),
+    align: (left, left, center),
+    table.header[*Material*][*Características*][*Cantidad*],
+    [Taza de cerámica], [Capacidad de 300 ml, paredes de 4 mm], [2],
+    [Tapa de silicona], [Ajustada al borde de la taza], [1],
+    [Termómetro digital], [Sonda de acero, precisión de ±0.1 °C], [1],
+    [Cronómetro], [El del teléfono móvil], [1],
+    [Café], [Recién hecho, unos 250 ml por taza], [500 ml],
+  ),
+  caption: [Material utilizado en el experimento],
+) <tab-material>
 
-+ Fruta.
+Todo el material, salvo el termómetro, es el que hay en cualquier cocina (@tab-material).
 
-+ Verdura.
+== Montaje
 
-+ Carne.
+La @fig-montaje muestra el montaje: la sonda del termómetro se introduce en el centro del café, a media altura, y se sujeta para que no toque las paredes de la taza.
 
-+ Pescado.
+// Una imagen dentro de una figura, con borde: box(stroke: …) la enmarca.
+// La ruta es relativa a ESTE fichero: las imágenes están en Archivos/Imágenes.
+#figure(
+  box(stroke: 0.5pt + gray, image("Imágenes/montaje.svg", width: 80%)),
+  caption: [Montaje del experimento. Elaboración propia],
+) <fig-montaje>
 
-  + Salmón.
+Para comparar, preparamos dos tazas iguales: una sin tapa y otra con tapa (@fig-tazas).
 
-  + Bacalao.
+// Dos imágenes lado a lado: un grid de dos columnas dentro de una sola figura.
+#figure(
+  grid(
+    columns: 2,
+    gutter: 2em,
+    image("Imágenes/taza-sin-tapa.svg", width: 4cm),
+    image("Imágenes/taza-con-tapa.svg", width: 4cm),
+    [_a)_ Sin tapa], [_b)_ Con tapa],
+  ),
+  caption: [Las dos tazas del experimento],
+) <fig-tazas>
 
-#lorem(50) #footnote[https://typst.app/docs] #lorem(10)
+== Procedimiento
 
-#link("https://example.com")
++ Dejamos el material en la cocina una hora antes para que estuviera a temperatura ambiente, que fue de 22.0 °C durante todo el experimento.
++ Llenamos las dos tazas con 250 ml de café recién hecho cada una y tapamos una de ellas.
++ Cuando el termómetro marcó 85.0 °C en cada taza, pusimos en marcha el cronómetro.
++ Anotamos la temperatura cada 2 minutos durante 40 minutos en la hoja de registro del @anexo-registro.
++ Repetimos el experimento tres días distintos y comprobamos que los resultados eran parecidos; en este trabajo presentamos los del primer día.
 
-#link("https://example.com")[
-  See example.com
-]
+== Tratamiento de los datos
 
-== Apartado a <apartado_3.1>
-
-#lorem(200)
-
-Tal y como aparece en el @apartado_3.1, los números algebraicos
-
-$ 1 + 2 + 3 + 4 + ... + n = (n dot (n+1))/2 $ <n_primeros_numeros>
-
-Para demostrar @n_primeros_numeros
-
-== Apartado b
-
-#lorem(200)
+Para cada medida calculamos $ln(T - T_a)$ y ajustamos una recta por mínimos cuadrados, como indica la ecuación @eq-lineal. La pendiente de la recta es $-k$, y el coeficiente de determinación $R^2$ indica lo bien que los datos se ajustan al modelo: cuanto más cerca de 1, mejor#footnote[Hicimos los cálculos con una hoja de cálculo. Las gráficas de este trabajo, en cambio, las dibuja Typst directamente a partir del fichero de datos.].

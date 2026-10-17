@@ -35,7 +35,9 @@ Al inicializar la plantilla, obtendrás una estructura de carpetas lista para tr
 - `main.typ`: El archivo principal donde configuras los datos de tu proyecto y llamas al resto de capítulos.
 - `Logo.svg`: El logo del instituto para la portada.
 - `referencias.yaml`: Archivo donde guardarás tu bibliografía en formato YAML o BibTeX.
-- `Archivos/`: Una carpeta pre-organizada con los diferentes capítulos (Abstract, Introducción, Capítulo 1, etc.) y una subcarpeta para tus imágenes.
+- `Archivos/`: Una carpeta pre-organizada con los diferentes capítulos (Abstract, Introducción, Capítulo 1, etc.) una subcarpeta para tus imágenes y otra, `Datos/`, con el CSV de las medidas.
+
+Los capítulos traen un **trabajo de ejemplo inventado** («¿Cuánto tarda en enfriarse un café?») que usa casi todo lo que se puede hacer: citas bibliográficas, notas al pie, listas, recuadros, ecuaciones numeradas y citadas, tablas, imágenes, gráficas con `lilaq` leídas de un CSV, anexos y glosario. Cada fichero explica en comentarios cómo se hace cada cosa. Sustitúyelo por tu trabajo.
 
 Los capítulos **no necesitan importar la plantilla**: basta con el `#import` del `main.typ`. Así, para pasar el proyecto a otra versión (o a otra plantilla con la misma configuración) solo se cambia esa línea. Si en un capítulo quieres usar una función del paquete, como `insertar-imagen`, impórtala en ese capítulo.
 
